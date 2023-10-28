@@ -1,0 +1,25 @@
+{
+  "name": "html5-check",
+  "version": "0.0.1",
+  "description": "TODO",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pascal-brand38/js-html5-check.git"
+  },
+  "author": "pascal.brand38@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pascal-brand38/js-html5-check/issues"
+  },
+  "homepage": "https://github.com/pascal-brand38/js-html5-check#readme",
+  "dependencies": {
+    "html-validator": "^6.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0"
+  }
+}
