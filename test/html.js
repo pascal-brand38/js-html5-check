@@ -7,12 +7,20 @@ describe("html5-check", () => {
       console.log('PASCAL')
     })
   })
-  describe("html only", () => {
+
+  // describe("html only", () => {
+
+  //   it("Basic", () => {
+  //       console.log('PASCAL')
+
+  //       html5check.htmlCheckSyntax("<h1>I <3 bad markup</h2>")
+  //   })
+  // })
+
+  describe("html5Check", () => {
 
     it("Basic", () => {
-        console.log('PASCAL')
-
-        html5check.htmlCheckSyntax("<h1>I <3 bad markup</h2>")
+        html5check.html5Check('tests/mydir')
     })
   })
 
