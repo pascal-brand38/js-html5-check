@@ -6,6 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const html = require('./html.js');
+const css = require('./css.js');
 
 async function html5Check(dir, options) {
   if (!options) {
@@ -25,7 +26,20 @@ async function html5Check(dir, options) {
     if (stat.isFile()) {
       // console.log("'%s' is a file.", filename);
       if (filename.endsWith('.html') || filename.endsWith('.htm')) {
+        if (options && options.html && options.html.skip) {
+          continue
+        }
         const checkErrors = await html.check(filename, options.html)
+        if (checkErrors.length !== 0) {
+          return checkErrors
+        }
+      }
+      if (filename.endsWith('.css')) {
+        if (options && options.css && options.css.skip) {
+          continue
+        }
+
+        const checkErrors = await css.check(filename, options.css)
         if (checkErrors.length !== 0) {
           return checkErrors
         }
