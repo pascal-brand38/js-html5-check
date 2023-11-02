@@ -4,7 +4,9 @@
 "use strict";
 
 const fs = require( 'fs' );
+const path = require('path')
 const cssValidator = require('w3c-css-validator');
+const parseCssUrls = require('css-url-parser');
 
 async function w3cMarkupValidation(cssStr, filename, options) {
   let excludes = []
@@ -25,14 +27,6 @@ async function w3cMarkupValidation(cssStr, filename, options) {
     tool: 'https://jigsaw.w3.org/css-validator//'
   }))
 
-  // results.forEach(err => checkErrors.push({
-  //   filename: filename,
-  //   line: (err.firstLine !== undefined) ? err.firstLine : err.lastLine,
-  //   message: err.message,
-  //   tool: 'https://validator.w3.org/'
-  // }))
-  // return checkErrors
-
   return checkErrors
 }
 
@@ -40,11 +34,40 @@ async function check(filename, options) {
   if (!options) {
     options = {}
   }
-  return w3cMarkupValidation(fs.readFileSync(filename, 'utf8'), filename, options.w3c)
+
+  const dirname = path.dirname(filename)
+  const cssStr = fs.readFileSync(filename, 'utf8')
+
+  const errors = w3cMarkupValidation(cssStr, filename, options.w3c)
+  if (errors.length > 0) {
+    return errors
+  }
+
+  const dependencies = parseCssUrls(cssStr)
+  // console.log(`----------------- ${filename}`)
+  // console.log(dependencies)
+  let res = []
+  for (const dep of dependencies) {
+    try {
+      const depname = (dirname + '/' + dep).replace(/\?.*/, '')
+      const stat = await fs.promises.stat(depname);
+      if (!stat.isFile()) {
+        throw 'Not found'
+      }
+    } catch {
+      res.push({
+        filename: filename,
+        // line: -1,
+        message: `Dependency not found: ${dep}`,
+        tool: 'css-url-parser'
+      })
+    }
+  }
+  return res     // TODO: check the dependencies area
+  // https://github.com/dependents/node-detective-postcss
+  // https://github.com/dependents/node-detective-scss
 
   // TODO: dependencies: internal and external
-
-  // TODO: JSON-LD: dependencies and types
 }
 
 exports.check = check

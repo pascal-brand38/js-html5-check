@@ -40,6 +40,7 @@ async function check(filename, options) {
   return w3cMarkupValidation(fs.readFileSync(filename, 'utf8'), filename, options.w3c)
 
   // TODO: dependencies: internal and external
+  // TODO: https://www.npmjs.com/package/html-urls
 
   // TODO: JSON-LD: dependencies and types
 }
