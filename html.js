@@ -5,6 +5,7 @@
 
 const fs = require( 'fs' );
 const validator = require('html-validator')
+const htmlUrls = require('html-urls')
 
 async function w3cMarkupValidation(htmlStr, filename, options) {
   const validatorOptions = {
@@ -37,7 +38,10 @@ async function check(filename, options) {
   if (!options) {
     options = {}
   }
-  return w3cMarkupValidation(fs.readFileSync(filename, 'utf8'), filename, options.w3c)
+  // return w3cMarkupValidation(fs.readFileSync(filename, 'utf8'), filename, options.w3c)
+
+  const dependencies = htmlUrls.getLinks(fs.readFileSync(filename, 'utf8'))
+  return dependencies
 
   // TODO: dependencies: internal and external
   // TODO: https://www.npmjs.com/package/html-urls

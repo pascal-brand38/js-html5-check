@@ -44,8 +44,6 @@ async function check(filename, options) {
   }
 
   const dependencies = parseCssUrls(cssStr)
-  // console.log(`----------------- ${filename}`)
-  // console.log(dependencies)
   let res = []
   for (const dep of dependencies) {
     try {
@@ -63,11 +61,7 @@ async function check(filename, options) {
       })
     }
   }
-  return res     // TODO: check the dependencies area
-  // https://github.com/dependents/node-detective-postcss
-  // https://github.com/dependents/node-detective-scss
-
-  // TODO: dependencies: internal and external
+  return res
 }
 
 exports.check = check

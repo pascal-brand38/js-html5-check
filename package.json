@@ -18,6 +18,7 @@
   "homepage": "https://github.com/pascal-brand38/js-html5-check#readme",
   "dependencies": {
     "css-url-parser": "^1.1.3",
+    "html-urls": "^2.4.50",
     "html-validator": "^6.0.1",
     "w3c-css-validator": "^1.3.1"
   },
